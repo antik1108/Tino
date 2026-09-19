@@ -1,10 +1,8 @@
 """Terminal initialization, safe teardown, and size monitoring."""
 
 import curses
-import os
-import sys
+from collections.abc import Generator
 from contextlib import contextmanager
-from typing import Generator
 
 MIN_TERMINAL_WIDTH = 60
 MIN_TERMINAL_HEIGHT = 16
@@ -34,10 +32,10 @@ class Terminal:
                 curses.start_color()
                 curses.use_default_colors()
                 # Define color pairs
-                curses.init_pair(1, curses.COLOR_GREEN, -1)   # Dino / obstacles
+                curses.init_pair(1, curses.COLOR_GREEN, -1)  # Dino / obstacles
                 curses.init_pair(2, curses.COLOR_YELLOW, -1)  # Scores & highlights
-                curses.init_pair(3, curses.COLOR_RED, -1)     # Game Over / danger
-                curses.init_pair(4, curses.COLOR_CYAN, -1)    # Title & borders
+                curses.init_pair(3, curses.COLOR_RED, -1)  # Game Over / danger
+                curses.init_pair(4, curses.COLOR_CYAN, -1)  # Title & borders
             except curses.error:
                 pass
 

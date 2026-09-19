@@ -23,9 +23,12 @@ class TestConfig(unittest.TestCase):
         config = Config()
         self.assertEqual(config.target_fps, 30)
         self.assertGreater(config.initial_speed, 0)
-        self.assertTrue("space" in config.keybindings.jump or " " in config.keybindings.jump)
-        self.assertTrue("q" in config.keybindings.quit or "Q" in config.keybindings.quit)
-        self.assertTrue("r" in config.keybindings.restart or "R" in config.keybindings.restart)
+        jump = config.keybindings.jump
+        self.assertTrue("space" in jump or " " in jump)
+        quit_keys = config.keybindings.quit
+        self.assertTrue("q" in quit_keys or "Q" in quit_keys)
+        restart_keys = config.keybindings.restart
+        self.assertTrue("r" in restart_keys or "R" in restart_keys)
 
     def test_load_non_existent_config_uses_defaults(self):
         """Missing config file loads default configuration without error."""

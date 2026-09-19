@@ -10,8 +10,12 @@ class TestDifficulty(unittest.TestCase):
 
     def test_speed_increases_over_time(self):
         """Speed strictly increases as elapsed survival time progresses."""
-        speed_start = calculate_speed(elapsed_time=0.0, initial_speed=20.0, acceleration=1.0)
-        speed_later = calculate_speed(elapsed_time=10.0, initial_speed=20.0, acceleration=1.0)
+        speed_start = calculate_speed(
+            elapsed_time=0.0, initial_speed=20.0, acceleration=1.0
+        )
+        speed_later = calculate_speed(
+            elapsed_time=10.0, initial_speed=20.0, acceleration=1.0
+        )
         self.assertGreater(speed_later, speed_start)
         self.assertEqual(speed_later, 30.0)
 
@@ -51,7 +55,9 @@ class TestDifficulty(unittest.TestCase):
             base_min=2.0,
             base_max=4.0,
         )
-        self.assertTrue(high_speed_interval <= low_speed_interval or high_speed_interval < 4.0)
+        self.assertTrue(
+            high_speed_interval <= low_speed_interval or high_speed_interval < 4.0
+        )
 
 
 if __name__ == "__main__":

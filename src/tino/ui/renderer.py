@@ -1,6 +1,7 @@
 """Screen renderer for TINO engine state."""
 
 import curses
+
 from tino.engine.game import Game
 from tino.engine.state import GameState
 from tino.ui.terminal import Terminal
@@ -173,13 +174,16 @@ class Renderer:
         speed_text = f"SPD: {speed_factor:.1f}x "
 
         self.safe_addstr(1, 2, hud_title, curses.color_pair(4) | curses.A_BOLD)
-        self.safe_addstr(1, w - len(score_text) - len(speed_text) - 4, score_text, curses.color_pair(2) | curses.A_BOLD)
+        score_x = w - len(score_text) - len(speed_text) - 4
+        self.safe_addstr(1, score_x, score_text, curses.color_pair(2) | curses.A_BOLD)
         self.safe_addstr(1, w - len(speed_text) - 2, speed_text, curses.A_DIM)
 
         # 2. Draw Ground Line & Texture
-        self._ground_scroll_offset = (self._ground_scroll_offset + game.current_speed * 0.05) % 20
+        self._ground_scroll_offset = (
+            self._ground_scroll_offset + game.current_speed * 0.05
+        ) % 20
         ground_pattern = "___.__.__...____.___"
-        full_ground = (ground_pattern * ((w // len(ground_pattern)) + 2))
+        full_ground = ground_pattern * ((w // len(ground_pattern)) + 2)
         offset_idx = int(self._ground_scroll_offset) % len(ground_pattern)
         visible_ground = full_ground[offset_idx : offset_idx + w]
 
@@ -259,7 +263,9 @@ class Renderer:
                 curses.color_pair(2) | curses.A_BOLD,
             )
         else:
-            final_str = f"Final Score: {game.score:05d}   |   Best: {game.high_score:05d}"
+            final_str = (
+                f"Final Score: {game.score:05d}   |   Best: {game.high_score:05d}"
+            )
             self.safe_addstr(
                 box_y + 4,
                 center_x - len(final_str) // 2,

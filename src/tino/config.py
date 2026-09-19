@@ -75,8 +75,9 @@ class Config:
                 )
 
             # Numerical overrides if provided
-            if "target_fps" in data and isinstance(data["target_fps"], int) and data["target_fps"] > 0:
-                config.target_fps = data["target_fps"]
+            fps_val = data.get("target_fps")
+            if isinstance(fps_val, int) and fps_val > 0:
+                config.target_fps = fps_val
 
         except (json.JSONDecodeError, OSError, TypeError, ValueError):
             # Gracefully ignore invalid config file

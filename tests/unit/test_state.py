@@ -54,7 +54,7 @@ class TestStateAndGame(unittest.TestCase):
         self.assertEqual(game.score, 20)
 
     def test_collision_triggers_game_over_and_saves_high_score(self):
-        """Collision with obstacle transitions game to GAME_OVER and persists new record."""
+        """Collision transitions game to GAME_OVER and persists new record."""
         store = JSONHighScoreStore(file_path=self.tmp_path / "high_score.json")
         game = Game(high_score_store=store)
         game.start_game()
@@ -64,9 +64,7 @@ class TestStateAndGame(unittest.TestCase):
         self.assertEqual(game.score, 50)
 
         # Inject obstacle directly colliding with player at ground level
-        game.obstacles.append(
-            Obstacle(x=game.player.x, y=0.0, width=3.0, height=3.0)
-        )
+        game.obstacles.append(Obstacle(x=game.player.x, y=0.0, width=3.0, height=3.0))
 
         # Tick to detect collision
         game.tick(0.01)

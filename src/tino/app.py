@@ -9,6 +9,10 @@ from tino.ui.input import InputHandler
 from tino.ui.renderer import Renderer
 from tino.ui.terminal import terminal_session
 
+# Cap dt to avoid a physics/spawn spike on the very first frame or after
+# a long stall (e.g. terminal resize taking time).
+_MAX_DT = 0.1  # seconds
+
 
 def run_app(config: Config | None = None) -> int:
     """Run the TINO terminal endless runner."""
@@ -26,8 +30,13 @@ def run_app(config: Config | None = None) -> int:
 
         while not game.should_quit:
             current_time = time.perf_counter()
-            dt = current_time - last_time
+            dt = min(current_time - last_time, _MAX_DT)
             last_time = current_time
+
+            # Sync world width to current terminal width *before* ticking so
+            # obstacle spawn positions are always correct for the visible area.
+            _, term_width = terminal.dimensions
+            game.world_width = float(term_width)
 
             # 1. Read input (non-blocking)
             action = input_handler.get_action()

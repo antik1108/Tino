@@ -1,7 +1,7 @@
 """High score persistence interface and JSON implementation."""
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Protocol
 
@@ -51,7 +51,7 @@ class JSONHighScoreStore:
         score_val = max(0, int(score))
         data = {
             "high_score": score_val,
-            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(UTC).isoformat(),
         }
         try:
             self._path.parent.mkdir(parents=True, exist_ok=True)

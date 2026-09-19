@@ -45,7 +45,8 @@ def create_parser() -> argparse.ArgumentParser:
         description="TINO — Terminal Dino Endless Runner",
     )
     parser.add_argument(
-        "-v", "--version",
+        "-v",
+        "--version",
         action="version",
         version=f"tino {__version__}",
     )
@@ -64,7 +65,8 @@ def create_parser() -> argparse.ArgumentParser:
         help="Clear the stored high score",
     )
     reset_parser.add_argument(
-        "-f", "--force",
+        "-f",
+        "--force",
         action="store_true",
         help="Skip confirmation prompt",
     )
